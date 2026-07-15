@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jacobs Barbers — Final Concepts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#FBF3E3;
+    --paper:#FBF3E3;
+    --paper-2:#F4E9D2;
+    --card:#FFFFFF;
+    --grey:#8C8370;
+    --charcoal:#211D18;
+    --line: rgba(43,38,32,0.12);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--white);
+    color:var(--charcoal);
+    font-family:'Cormorant Garamond', serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:900px; margin:0 auto; padding:0 32px;}
+
+  .eyebrow{
+    font-family:'EB Garamond', serif; text-transform:uppercase; letter-spacing:0.22em;
+    font-size:0.7rem; font-weight:600; color:var(--grey);
+  }
+  h1,h2{ font-family:'EB Garamond', serif; font-weight:400; color:var(--charcoal); }
+
+  header{ padding:70px 0 60px; text-align:center; }
+  header .eyebrow{ margin-bottom:20px; }
+  header h1{ font-size:clamp(2.4rem, 5.5vw, 3.6rem); margin-bottom:16px; letter-spacing:-0.01em;}
+  header h1 em{ font-style:italic; }
+  header p{ color:var(--grey); font-size:1.1rem; max-width:480px; margin:0 auto; line-height:1.6; }
+
+  .cards{
+    display:grid; grid-template-columns:repeat(2, 1fr); gap:26px;
+    padding-bottom:90px;
+  }
+  .card{
+    border:1px solid var(--line); border-radius:10px; overflow:hidden;
+    background:var(--card); display:flex; flex-direction:column;
+    transition:transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover{ transform:translateY(-4px); box-shadow:0 20px 40px rgba(33,29,24,0.08); }
+  .card-top{ background:var(--paper-2); padding:40px 30px 30px; border-bottom:1px solid var(--line); }
+  .card-num{ font-family:'EB Garamond', serif; font-style:italic; font-size:1.1rem; color:var(--grey); margin-bottom:14px; display:block;}
+  .card-top h2{ font-size:1.9rem; }
+  .card-body{ padding:26px 30px 32px; flex:1; display:flex; flex-direction:column;}
+  .card-body p{ color:var(--grey); font-size:1.08rem; line-height:1.65; flex:1; margin-bottom:26px;}
+  .card-btn{
+    background:var(--charcoal); color:var(--white); text-align:center; padding:14px 20px;
+    border-radius:30px; font-family:'EB Garamond', serif; font-size:0.9rem; font-weight:500;
+    transition:background 0.2s ease;
+  }
+  .card-btn:hover{ background:#3a3327; }
+  @media (max-width:700px){ .cards{grid-template-columns:1fr; padding-bottom:60px;} }
+
+  footer{ border-top:1px solid var(--line); padding:44px 0; text-align:center; }
+  footer p{ color:var(--grey); font-size:1rem; line-height:1.7; font-family:'Cormorant Garamond', serif;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="eyebrow">Jacobs Barbers · Etobicoke</div>
+    <h1>Two final <em>directions.</em></h1>
+    <p>Both share the same precise, cream-and-white treatment matching the reference site — the only difference is the hero photo.</p>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="cards">
+    <div class="card">
+      <div class="card-top">
+        <span class="card-num">Version 6</span>
+        <h2>Precise</h2>
+      </div>
+      <div class="card-body">
+        <p>The original hero photo — hands cutting hair with scissors and a comb.</p>
+        <a class="card-btn" href="v6-precise/">View This Version →</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="card-num">Version 7</span>
+        <h2>New Hero</h2>
+      </div>
+      <div class="card-body">
+        <p>Same precise treatment, with a new hero photo — a straight razor and combs laid out on a towel.</p>
+        <a class="card-btn" href="v7-new-hero/">View This Version →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p>Built for Jacobs Barbers, 170 North Queen Street, Etobicoke.</p>
+  </div>
+</footer>
+
+</body>
+</html>
