@@ -93,7 +93,8 @@
 
   /* ---------- HERO ---------- */
   .hero{
-    min-height:62vh; display:flex; align-items:center;
+    aspect-ratio:1127/1170; max-height:88vh; min-height:420px;
+    display:flex; align-items:center;
     padding-top:130px; padding-bottom:60px;
     position:relative;
     background:var(--paper);
@@ -178,7 +179,7 @@
 
   @media (max-width:700px){
     .hero{
-      min-height:auto;
+      aspect-ratio:auto; min-height:auto;
       padding-top:110px; padding-bottom:56px;
     }
     .hero-photo-layer{ background-position:center 35%; }
