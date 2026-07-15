@@ -68,15 +68,13 @@
     height:40px; width:auto; display:block;
   }
   .menu-btn{
-    display:flex; align-items:center; gap:12px;
-    background:var(--charcoal); color:var(--white); border:none;
-    padding:12px 22px 12px 18px; border-radius:30px;
-    font-family:'EB Garamond', serif; font-size:0.9rem; letter-spacing:0.02em; font-weight:500;
-    cursor:pointer; transition:background 0.2s ease;
+    display:flex; align-items:center;
+    background:none; border:none; padding:8px;
+    cursor:pointer; transition:opacity 0.2s ease;
   }
-  .menu-btn:hover{background:#3a3327;}
-  .menu-bars{ display:flex; flex-direction:column; gap:4px; width:18px; }
-  .menu-bars span{ display:block; height:1.5px; background:var(--white); width:100%; }
+  .menu-btn:hover{opacity:0.6;}
+  .menu-bars{ display:flex; flex-direction:column; gap:5px; width:24px; }
+  .menu-bars span{ display:block; height:1.5px; background:var(--charcoal); width:100%; }
 
   .menu-overlay{
     position:fixed; inset:0; z-index:150;
@@ -316,9 +314,8 @@
 <body>
 
 <header id="siteHeader">
-  <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menuOverlay">
+  <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menuOverlay" aria-label="Menu">
     <span class="menu-bars"><span></span><span></span><span></span></span>
-    Menu
   </button>
 </header>
 
