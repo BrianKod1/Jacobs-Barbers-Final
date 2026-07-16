@@ -126,7 +126,7 @@
     position:absolute; inset:0; z-index:1;
     background:linear-gradient(100deg, rgba(251,243,227,0.75) 0%, rgba(251,243,227,0.55) 40%, rgba(251,243,227,0.35) 75%, rgba(251,243,227,0.18) 100%);
   }
-  .hero .wrap{position:relative; z-index:2;}
+  .hero .wrap{position:relative; z-index:2; max-width:none; margin:0; padding-left:64px; padding-right:32px;}
   .hero-inner{max-width:720px;}
   .hero .eyebrow{margin-bottom:26px; display:flex; align-items:center; gap:12px; color:var(--grey);}
   .hero .eyebrow .rule{width:30px; height:1px; background:var(--grey);}
@@ -182,6 +182,7 @@
       aspect-ratio:auto; min-height:auto;
       padding-top:110px; padding-bottom:56px;
     }
+    .hero .wrap{ padding-left:32px; padding-right:32px; }
     .hero-photo-layer{ background-position:center 35%; }
     .hero-logo{max-width:190px;}
     .hero h1{ font-size:clamp(2.4rem, 9vw, 3.6rem); }
@@ -250,17 +251,30 @@
   }
 
   /* ---------- GALLERY ---------- */
-  .gallery-grid{
-    display:grid; grid-template-columns:repeat(4, 1fr); gap:14px;
+  .gallery-scroll{
+    overflow:hidden; width:100%;
+    -webkit-mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+    mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  }
+  .gallery-track{
+    display:flex; gap:14px; width:max-content;
+    animation:galleryScroll 34s linear infinite;
+  }
+  .gallery-scroll:hover .gallery-track{ animation-play-state:paused; }
+  @keyframes galleryScroll{
+    0%{ transform:translateX(0); }
+    100%{ transform:translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .gallery-track{ animation:none; flex-wrap:wrap; }
   }
   .gallery-item{
-    aspect-ratio:4/5; border-radius:4px; overflow:hidden; background:var(--paper-2);
+    flex:0 0 260px; aspect-ratio:4/5; border-radius:4px; overflow:hidden; background:var(--paper-2);
     border:1px solid var(--line); position:relative;
   }
   .gallery-item img{transition:transform 0.4s ease;}
   .gallery-item:hover img{transform:scale(1.04);}
-  @media (max-width:900px){ .gallery-grid{grid-template-columns:repeat(3, 1fr);} }
-  @media (max-width:600px){ .gallery-grid{grid-template-columns:repeat(2, 1fr); gap:10px;} }
+  @media (max-width:600px){ .gallery-item{flex:0 0 190px;} }
 
   /* ---------- ABOUT ---------- */
   .about-grid{display:grid; grid-template-columns:0.85fr 1.15fr; gap:70px; align-items:center;}
@@ -468,7 +482,8 @@
       <h2>A look at the work.</h2>
       <p>Every image below is a placeholder file inside the <code>images</code> folder — see the note at the end of this page for exactly how to swap them.</p>
     </div>
-    <div class="gallery-grid">
+    <div class="gallery-scroll">
+      <div class="gallery-track">
       <div class="gallery-item"><img src="images/cut-1.jpeg" alt="Haircut example 1"></div>
       <div class="gallery-item"><img src="images/cut-2.jpeg" alt="Haircut example 2"></div>
       <div class="gallery-item"><img src="images/cut-3.jpeg" alt="Haircut example 3"></div>
@@ -477,6 +492,15 @@
       <div class="gallery-item"><img src="images/cut-6.jpeg" alt="Haircut example 6"></div>
       <div class="gallery-item"><img src="images/cut-7.jpeg" alt="Haircut example 7"></div>
       <div class="gallery-item"><img src="images/cut-8.jpeg" alt="Haircut example 8"></div>
+      <div class="gallery-item"><img src="images/cut-1.jpeg" alt="Haircut example 1"></div>
+      <div class="gallery-item"><img src="images/cut-2.jpeg" alt="Haircut example 2"></div>
+      <div class="gallery-item"><img src="images/cut-3.jpeg" alt="Haircut example 3"></div>
+      <div class="gallery-item"><img src="images/cut-4.jpeg" alt="Haircut example 4"></div>
+      <div class="gallery-item"><img src="images/cut-5.jpeg" alt="Haircut example 5"></div>
+      <div class="gallery-item"><img src="images/cut-6.jpeg" alt="Haircut example 6"></div>
+      <div class="gallery-item"><img src="images/cut-7.jpeg" alt="Haircut example 7"></div>
+      <div class="gallery-item"><img src="images/cut-8.jpeg" alt="Haircut example 8"></div>
+    </div>
     </div>
   </div>
 </section>
