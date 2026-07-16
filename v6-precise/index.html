@@ -252,23 +252,19 @@
 
   /* ---------- GALLERY ---------- */
   .gallery-scroll{
-    overflow:hidden; width:100%;
-    -webkit-mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-    mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+    overflow-x:auto; overflow-y:hidden; width:100%;
+    -webkit-overflow-scrolling:touch;
+    scroll-snap-type:x proximity;
+    padding-bottom:14px;
   }
+  .gallery-scroll::-webkit-scrollbar{ height:6px; }
+  .gallery-scroll::-webkit-scrollbar-thumb{ background:var(--line); border-radius:10px; }
+  .gallery-scroll::-webkit-scrollbar-track{ background:transparent; }
   .gallery-track{
     display:flex; gap:14px; width:max-content;
-    animation:galleryScroll 34s linear infinite;
-  }
-  .gallery-scroll:hover .gallery-track{ animation-play-state:paused; }
-  @keyframes galleryScroll{
-    0%{ transform:translateX(0); }
-    100%{ transform:translateX(-50%); }
-  }
-  @media (prefers-reduced-motion: reduce){
-    .gallery-track{ animation:none; flex-wrap:wrap; }
   }
   .gallery-item{
+    scroll-snap-align:start;
     flex:0 0 260px; aspect-ratio:4/5; border-radius:4px; overflow:hidden; background:var(--paper-2);
     border:1px solid var(--line); position:relative;
   }
@@ -484,14 +480,6 @@
     </div>
     <div class="gallery-scroll">
       <div class="gallery-track">
-      <div class="gallery-item"><img src="images/cut-1.jpeg" alt="Haircut example 1"></div>
-      <div class="gallery-item"><img src="images/cut-2.jpeg" alt="Haircut example 2"></div>
-      <div class="gallery-item"><img src="images/cut-3.jpeg" alt="Haircut example 3"></div>
-      <div class="gallery-item"><img src="images/cut-4.jpeg" alt="Haircut example 4"></div>
-      <div class="gallery-item"><img src="images/cut-5.jpeg" alt="Haircut example 5"></div>
-      <div class="gallery-item"><img src="images/cut-6.jpeg" alt="Haircut example 6"></div>
-      <div class="gallery-item"><img src="images/cut-7.jpeg" alt="Haircut example 7"></div>
-      <div class="gallery-item"><img src="images/cut-8.jpeg" alt="Haircut example 8"></div>
       <div class="gallery-item"><img src="images/cut-1.jpeg" alt="Haircut example 1"></div>
       <div class="gallery-item"><img src="images/cut-2.jpeg" alt="Haircut example 2"></div>
       <div class="gallery-item"><img src="images/cut-3.jpeg" alt="Haircut example 3"></div>
