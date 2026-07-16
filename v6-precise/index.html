@@ -254,7 +254,8 @@
   .gallery-scroll{
     overflow-x:auto; overflow-y:hidden; width:100%;
     -webkit-overflow-scrolling:touch;
-    scroll-snap-type:x proximity;
+    scroll-snap-type:x mandatory;
+    overscroll-behavior-x:contain;
     padding-bottom:14px;
   }
   .gallery-scroll::-webkit-scrollbar{ height:6px; }
@@ -263,6 +264,7 @@
   .gallery-track{
     display:flex; gap:14px; width:max-content;
   }
+  .gallery-item:last-child{ scroll-snap-align:end; }
   .gallery-item{
     scroll-snap-align:start;
     flex:0 0 260px; aspect-ratio:4/5; border-radius:4px; overflow:hidden; background:var(--paper-2);
@@ -345,7 +347,6 @@
   <div class="wrap">
     <div class="hero-inner">
       <img class="hero-logo" src="images/logo.png" alt="Jacobs Barbers">
-      <p class="lede">170 North Queen Street, Studio 7<br>Etobicoke, ON M9C 1B1</p>
     </div>
   </div>
 </section>
