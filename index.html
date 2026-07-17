@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jacobs Barbers — Final Concepts</title>
+<title>Jacobs Barbers — Etobicoke</title>
+<link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
@@ -13,100 +14,692 @@
     --paper:#FBF3E3;
     --paper-2:#F4E9D2;
     --card:#FFFFFF;
-    --grey:#8C8370;
+    --grey:#5C5548;
     --charcoal:#211D18;
     --line: rgba(43,38,32,0.12);
   }
   *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
   body{
     background:var(--white);
     color:var(--charcoal);
     font-family:'Cormorant Garamond', serif;
     -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
   }
   a{color:inherit; text-decoration:none;}
-  .wrap{max-width:900px; margin:0 auto; padding:0 32px;}
+  img{display:block; max-width:100%; width:100%; height:100%; object-fit:cover;}
 
   .eyebrow{
-    font-family:'EB Garamond', serif; text-transform:uppercase; letter-spacing:0.22em;
-    font-size:0.7rem; font-weight:600; color:var(--grey);
+    font-family:'EB Garamond', serif;
+    text-transform:uppercase;
+    letter-spacing:0.22em;
+    font-size:0.82rem;
+    font-weight:600;
+    color:var(--grey);
   }
-  h1,h2{ font-family:'EB Garamond', serif; font-weight:400; color:var(--charcoal); }
+  h1,h2,h3{
+    font-family:'EB Garamond', serif;
+    font-weight:400;
+    line-height:1.08;
+    color:var(--charcoal);
+  }
+  .wrap{max-width:1120px; margin:0 auto; padding:0 32px;}
 
-  header{ padding:70px 0 60px; text-align:center; }
-  header .eyebrow{ margin-bottom:20px; }
-  header h1{ font-size:clamp(2.4rem, 5.5vw, 3.6rem); margin-bottom:16px; letter-spacing:-0.01em;}
-  header h1 em{ font-style:italic; }
-  header p{ color:var(--grey); font-size:1.25rem; max-width:480px; margin:0 auto; line-height:1.6; }
+  /* ---------- NAV ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:flex-end;
+    padding:26px 44px;
+    background:rgba(251,243,227,0.9);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid transparent;
+    transition:border-color 0.3s ease;
+  }
+  header.scrolled{border-bottom-color:var(--line);}
+  @media (max-width:480px){ header{ padding:18px 20px; } header.scrolled{ padding:14px 20px; } }
+  header .brand{
+    font-family:'EB Garamond', serif; font-style:italic; font-size:1.5rem; letter-spacing:0.01em;
+  }
+  header .brand img{
+    height:40px; width:auto; display:block;
+  }
+  .menu-btn{
+    display:flex; align-items:center;
+    background:none; border:none; padding:8px;
+    cursor:pointer; transition:opacity 0.2s ease;
+  }
+  .menu-btn:hover{opacity:0.6;}
+  .menu-bars{ display:flex; flex-direction:column; gap:5px; width:24px; }
+  .menu-bars span{ display:block; height:1.5px; background:var(--charcoal); width:100%; }
 
-  .cards{
-    display:grid; grid-template-columns:repeat(2, 1fr); gap:26px;
-    padding-bottom:90px;
+  .menu-overlay{
+    position:fixed; inset:0; z-index:150;
+    background:var(--paper);
+    display:flex; align-items:center; justify-content:center;
+    opacity:0; visibility:hidden; transform:translateY(-12px);
+    transition:opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
   }
-  .card{
-    border:1px solid var(--line); border-radius:10px; overflow:hidden;
-    background:var(--card); display:flex; flex-direction:column;
-    transition:transform 0.2s ease, box-shadow 0.2s ease;
+  .menu-overlay.open{ opacity:1; visibility:visible; transform:translateY(0); }
+  .menu-overlay nav{ display:flex; flex-direction:column; align-items:center; gap:30px; }
+  .menu-overlay nav a{
+    font-family:'EB Garamond', serif; font-size:clamp(2rem, 5vw, 3.2rem); color:var(--charcoal);
+    transition:color 0.2s ease;
   }
-  .card:hover{ transform:translateY(-4px); box-shadow:0 20px 40px rgba(33,29,24,0.08); }
-  .card-top{ background:var(--paper-2); padding:40px 30px 30px; border-bottom:1px solid var(--line); }
-  .card-num{ font-family:'EB Garamond', serif; font-style:italic; font-size:1.1rem; color:var(--grey); margin-bottom:14px; display:block;}
-  .card-top h2{ font-size:1.9rem; }
-  .card-body{ padding:26px 30px 32px; flex:1; display:flex; flex-direction:column;}
-  .card-body p{ color:var(--grey); font-size:1.2rem; line-height:1.7; flex:1; margin-bottom:26px;}
-  .card-btn{
-    background:var(--charcoal); color:var(--white); text-align:center; padding:14px 20px;
-    border-radius:30px; font-family:'EB Garamond', serif; font-size:0.9rem; font-weight:500;
+  .menu-overlay nav a:hover{ color:var(--grey); }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    width:100%; aspect-ratio:1127/1170; max-height:88vh; min-height:420px;
+    display:flex; align-items:center;
+    padding-top:130px; padding-bottom:60px;
+    position:relative;
+    background:var(--paper);
+    overflow:hidden;
+  }
+  .hero-photo-layer{
+    position:absolute; inset:0; z-index:0;
+    background-image:url('images/hero.jpeg');
+    background-size:cover;
+    background-position:center 40%;
+    opacity:0.58;
+    animation:heroZoom 26s ease-in-out infinite alternate;
+  }
+  @keyframes heroZoom{
+    0%{ transform:scale(1); }
+    100%{ transform:scale(1.03); }
+  }
+  .hero-inner{ animation:heroRise 1.1s ease-out both; }
+  @keyframes heroRise{
+    from{ opacity:0; transform:translateY(18px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .hero-photo-layer{ animation:none; }
+    .hero-inner{ animation:none; }
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:0; z-index:1;
+    background:linear-gradient(100deg, rgba(251,243,227,0.75) 0%, rgba(251,243,227,0.55) 40%, rgba(251,243,227,0.35) 75%, rgba(251,243,227,0.18) 100%);
+  }
+  .hero .wrap{position:relative; z-index:2; max-width:none; margin:0; padding-left:64px; padding-right:32px;}
+  .hero-inner{max-width:720px;}
+  .hero .eyebrow{margin-bottom:26px; display:flex; align-items:center; gap:12px; color:var(--grey);}
+  .hero .eyebrow .rule{width:30px; height:1px; background:var(--grey);}
+  .hero h1{
+    font-size:clamp(2.8rem, 7vw, 5.4rem);
+    margin-bottom:28px;
+    letter-spacing:-0.01em;
+    font-weight:400;
+    color:var(--charcoal);
+  }
+  .hero h1 em{font-style:italic; color:var(--charcoal);}
+  .hero-logo{
+    width:100%; max-width:300px; height:auto; margin-bottom:28px; display:block;
+  }
+  .welcome-section{ padding:70px 0 30px; text-align:center; }
+  .welcome-heading{
+    font-size:clamp(1.9rem, 3.6vw, 2.7rem); margin-bottom:22px; color:var(--charcoal);
+  }
+  .welcome-bio{
+    font-size:1.22rem; line-height:1.8; color:var(--grey); max-width:640px; margin:0 auto;
+  }
+  .hero p.lede{
+    font-size:1.22rem; line-height:1.7; color:var(--grey);
+    max-width:480px; margin-bottom:44px;
+  }
+  .hero-actions{display:flex; gap:18px; flex-wrap:wrap; align-items:center;}
+  .btn-primary{
+    background:var(--charcoal); color:var(--white); padding:16px 34px; border-radius:30px;
+    font-size:1.05rem; font-weight:500; display:inline-block; transition:all 0.2s ease;
+  }
+  .btn-primary:hover{background:#3a3327;}
+  .btn-ghost{
+    padding:16px 8px; font-size:1.05rem; color:var(--charcoal); border-bottom:1px solid var(--charcoal);
+    display:inline-block; transition:opacity 0.2s ease;
+  }
+  .btn-ghost:hover{opacity:0.6;}
+  .hero .btn-ghost{color:#FFFFFF; border-bottom-color:rgba(255,255,255,0.7);}
+  .hero .btn-ghost:hover{opacity:0.75;}
+
+  /* ---------- DRIFT BANNER ---------- */
+  .drift-banner{
+    display:none; /* hidden until a real banner photo is added — remove this line to bring it back */
+    width:100%; height:56vh; min-height:340px; max-height:560px;
+    overflow:hidden; position:relative; background:var(--paper-2);
+  }
+  .drift-banner img{
+    width:112%; height:112%; object-fit:cover; position:absolute; top:-6%; left:-6%;
+    animation:driftPan 34s ease-in-out infinite alternate;
+  }
+  @keyframes driftPan{
+    0%{ transform:translate(0,0) scale(1); }
+    100%{ transform:translate(-3.5%, -2%) scale(1.06); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .drift-banner img{ animation:none; }
+  }
+
+  @media (max-width:700px){
+    .hero{
+      aspect-ratio:auto; min-height:auto;
+      padding-top:110px; padding-bottom:56px;
+    }
+    .hero .wrap{ padding-left:32px; padding-right:32px; }
+    .hero-photo-layer{ background-position:center 35%; }
+    .hero-logo{max-width:190px;}
+    .hero h1{ font-size:clamp(2.4rem, 9vw, 3.6rem); }
+    .hero .eyebrow{ font-size:0.65rem; }
+    .hero p.lede{ font-size:1.1rem; }
+    .welcome-bio{ font-size:1.05rem; }
+    .hero-actions{ flex-direction:column; align-items:flex-start; gap:14px; }
+    .hero-actions .btn-primary{ width:100%; text-align:center; }
+  }
+  @media (max-width:420px){
+    .hero-logo{max-width:160px;}
+  }
+
+  /* ---------- WHY CARDS ---------- */
+  .why{background:var(--paper);}
+  .why-grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:22px;
+  }
+  .why-card{
+    background:var(--card); border:1px solid var(--line); border-radius:10px;
+    padding:38px 30px; text-align:center; transition:transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .why-card:hover{ transform:translateY(-4px); box-shadow:0 20px 40px rgba(38,37,36,0.07); }
+  .why-icon{
+    width:56px; height:56px; border-radius:12px; background:var(--paper-2); border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center; margin:0 auto 22px;
+  }
+  .why-icon svg{ width:24px; height:24px; stroke:var(--charcoal); }
+  .why-card h3{ font-size:1.3rem; margin-bottom:12px; font-weight:400;}
+  .why-card p{ color:var(--grey); font-size:1.08rem; line-height:1.7; }
+  .why-card ul{ list-style:none; text-align:left; }
+  .why-card ul li{
+    color:var(--grey); font-size:1.05rem; line-height:1.6; padding:6px 0 6px 20px; position:relative;
+  }
+  .why-card ul li::before{
+    content:"—"; position:absolute; left:0; color:var(--charcoal);
+  }
+  .why-card .why-btn{
+    display:inline-block; margin-top:16px; background:var(--charcoal); color:var(--white);
+    padding:12px 26px; border-radius:30px; font-family:'EB Garamond', serif; font-size:0.95rem;
     transition:background 0.2s ease;
   }
-  .card-btn:hover{ background:#3a3327; }
-  @media (max-width:700px){ .cards{grid-template-columns:1fr; padding-bottom:60px;} }
+  .why-card .why-btn:hover{ background:#3a3327; }
+  @media (max-width:860px){ .why-grid{grid-template-columns:repeat(2, 1fr);} }
+  @media (max-width:600px){ .why-grid{grid-template-columns:1fr;} }
 
-  footer{ border-top:1px solid var(--line); padding:44px 0; text-align:center; }
-  footer p{ color:var(--grey); font-size:1.15rem; line-height:1.7; font-family:'Cormorant Garamond', serif;}
+  /* ---------- WHAT WE DO PILLARS ---------- */
+  .pillars{ display:grid; grid-template-columns:repeat(3, 1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
+  .pillar{ background:var(--card); padding:44px 36px; }
+  .pillar .p-num{ font-family:'EB Garamond', serif; font-style:italic; font-size:1.1rem; color:var(--grey); margin-bottom:20px; display:block; }
+  .pillar h3{ font-size:1.5rem; margin-bottom:14px; }
+  .pillar p{ color:var(--grey); font-size:1.1rem; line-height:1.75; }
+  @media (max-width:800px){ .pillars{grid-template-columns:1fr;} }
+
+  /* ---------- SECTION SHARED ---------- */
+  section{padding:52px 0;}
+  #services{padding-top:60px;}
+  .section-alt{background:var(--paper);}
+  .section-head{margin-bottom:60px; max-width:560px;}
+  .section-head h2{font-size:clamp(2.2rem, 4.4vw, 3.2rem); margin-top:16px;}
+  .section-head p{color:var(--grey); font-size:1.18rem; line-height:1.65; margin-top:18px;}
+
+  .gallery-head-row{ display:flex; justify-content:space-between; align-items:flex-end; gap:30px; margin-bottom:60px; flex-wrap:wrap; }
+  .gallery-head-row .section-head{ margin-bottom:0; }
+  .gallery-nav{ display:flex; gap:10px; }
+  .gallery-nav button{
+    width:46px; height:46px; border-radius:50%; border:1px solid var(--charcoal);
+    background:transparent; color:var(--charcoal); cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:background 0.25s ease, color 0.25s ease, transform 0.2s ease;
+  }
+  .gallery-nav button svg{ width:16px; height:16px; }
+  .gallery-nav button:hover{ background:var(--charcoal); color:var(--white); transform:translateY(-2px); }
+  .gallery-nav button:active{ transform:translateY(0); }
+  .gallery-nav button:disabled{ opacity:0.3; cursor:default; }
+  .gallery-nav button:disabled:hover{ background:transparent; color:var(--charcoal); transform:none; }
+  @media (max-width:600px){ .gallery-nav{display:none;} }
+
+  /* ---------- SERVICES ---------- */
+  .service-table{width:100%; border-collapse:collapse;}
+  .service-table tr{border-bottom:1px solid var(--line);}
+  .service-table tr:first-child{border-top:1px solid var(--line);}
+  .service-table td{padding:22px 0; vertical-align:top;}
+  .service-table td.s-name{font-family:'EB Garamond', serif; font-size:1.4rem; padding-right:24px;}
+  .service-table td.s-desc{color:var(--grey); font-size:1.1rem; line-height:1.65; padding-right:24px;}
+  .service-table td.s-price{
+    font-size:1.1rem; font-weight:500; white-space:nowrap; text-align:right; color:var(--charcoal);
+  }
+  .placeholder-note{
+    margin-top:34px; padding:18px 22px; border:1px dashed var(--line); border-radius:4px;
+    font-size:1.05rem; color:var(--grey); line-height:1.65;
+  }
+  .placeholder-note b{color:var(--charcoal);}
+  @media (max-width:700px){
+    .service-table td.s-desc{display:none;}
+  }
+
+  /* ---------- GALLERY ---------- */
+  .gallery-scroll{
+    overflow-x:auto; overflow-y:hidden; width:100%;
+    -webkit-overflow-scrolling:touch;
+    scroll-snap-type:x mandatory;
+    overscroll-behavior-x:contain;
+    padding-bottom:14px;
+  }
+  .gallery-scroll::-webkit-scrollbar{ height:6px; }
+  .gallery-scroll::-webkit-scrollbar-thumb{ background:var(--line); border-radius:10px; }
+  .gallery-scroll::-webkit-scrollbar-track{ background:transparent; }
+  .gallery-track{
+    display:flex; gap:14px; width:max-content;
+  }
+  .gallery-item:last-child{ scroll-snap-align:end; }
+  .gallery-item{
+    scroll-snap-align:start;
+    flex:0 0 260px; aspect-ratio:4/5; border-radius:4px; overflow:hidden; background:var(--paper-2);
+    border:1px solid var(--line); position:relative;
+  }
+  .gallery-item img{transition:transform 0.4s ease;}
+  .gallery-item:hover img{transform:scale(1.04);}
+  @media (max-width:600px){ .gallery-item{flex:0 0 190px;} }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{display:grid; grid-template-columns:0.85fr 1.15fr; gap:70px; align-items:center;}
+  .about-photo{aspect-ratio:4/5; border-radius:6px; overflow:hidden; border:1px solid var(--line); background:var(--paper);}
+  .about-copy p{color:var(--grey); line-height:1.85; font-size:1.18rem; margin-bottom:20px;}
+  .about-copy .signature-line{
+    font-family:'EB Garamond', serif; font-style:italic; font-size:1.3rem; color:var(--charcoal); margin-top:26px;
+  }
+  @media (max-width:860px){
+    .about-grid{grid-template-columns:1fr; gap:44px;}
+  }
+
+  /* ---------- HOURS / VISIT ---------- */
+  .visit-grid{display:grid; grid-template-columns:1fr 1fr; gap:70px;}
+  .visit-block{margin-bottom:32px;}
+  .visit-block .eyebrow{margin-bottom:10px; display:block;}
+  .visit-block .value{font-family:'EB Garamond', serif; font-size:1.4rem;}
+  .visit-block .note{font-size:0.9rem; color:var(--grey); margin-top:8px; line-height:1.6;}
+  .hours-table{width:100%; border-collapse:collapse; margin-top:6px;}
+  .hours-table td{padding:11px 0; border-bottom:1px solid var(--line); font-size:1.1rem;}
+  .hours-table td:first-child{color:var(--grey);}
+  .hours-table td:last-child{text-align:right; color:var(--charcoal); font-weight:500;}
+  .map-frame{border-radius:6px; overflow:hidden; border:1px solid var(--line); aspect-ratio:1/1; min-height:280px; width:100%;}
+  .map-frame iframe{width:100%; height:100%; border:0; filter:grayscale(20%) contrast(0.98);}
+  @media (max-width:860px){ .visit-grid{grid-template-columns:1fr;} }
+
+  /* ---------- CONTACT / CTA ---------- */
+  .cta-band{text-align:center; padding:60px 0;}
+  .cta-band h2{font-size:clamp(2.4rem, 5.6vw, 3.8rem); margin-top:18px;}
+  .cta-band p{color:var(--grey); max-width:440px; margin:22px auto 40px; line-height:1.65; font-size:1.18rem;}
+  .contact-links{display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-top:26px;}
+  .contact-links a{font-size:0.9rem; color:var(--grey);}
+  .contact-links a:hover{color:var(--charcoal);}
+
+  footer{padding:50px 0; border-top:1px solid var(--line);}
+  .footer-grid{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;}
+  .footer-grid .brand{font-family:'EB Garamond', serif; font-style:italic; font-size:1.3rem;}
+  .footer-grid .brand img{height:28px; width:auto; display:block;}
+  .footer-links{display:flex; gap:30px; font-size:1rem; color:var(--grey);}
+  .footer-links a:hover{color:var(--charcoal);}
+  .footer-note{font-size:0.9rem; color:var(--grey); margin-top:20px; text-align:center;}
+
+  .preview-badge{
+    position:fixed; bottom:20px; right:20px; z-index:200;
+    background:var(--charcoal); color:var(--white);
+    font-size:0.72rem; text-transform:uppercase; letter-spacing:0.06em; font-weight:500;
+    padding:10px 16px; border-radius:30px; box-shadow:0 8px 24px rgba(0,0,0,0.15);
+  }
+  :focus-visible{outline:2px solid var(--charcoal); outline-offset:3px;}
 </style>
 </head>
 <body>
 
-<header>
-  <div class="wrap">
-    <div class="eyebrow">Jacobs Barbers · Etobicoke</div>
-    <h1>Closer to <em>the mark.</em></h1>
-    <p>Both share the same precise, cream-and-white treatment matching the reference site — the only difference is the hero photo.</p>
-  </div>
+<header id="siteHeader">
+  <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menuOverlay" aria-label="Menu">
+    <span class="menu-bars"><span></span><span></span><span></span></span>
+  </button>
 </header>
 
-<div class="wrap">
-  <div class="cards">
-    <div class="card">
-      <div class="card-top">
-        <span class="card-num">Version 6</span>
-        <h2>Precise</h2>
-      </div>
-      <div class="card-body">
-        <p>The original hero photo — hands cutting hair with scissors and a comb.</p>
-        <a class="card-btn" href="v6-precise/">View This Version →</a>
-      </div>
-    </div>
+<div class="menu-overlay" id="menuOverlay">
+  <nav>
+    <a href="#services">Services</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#about">About</a>
+    <a href="#visit">Hours</a>
+    <a href="https://jacobsbarbers.mysalononline.com/Booking/?sid=0&guid=930aeb35-9485-4ee4-9786-aefa81fcb1c2" target="_blank" rel="noopener">Book Now</a>
+  </nav>
+</div>
 
-    <div class="card">
-      <div class="card-top">
-        <span class="card-num">Version 7</span>
-        <h2>New Hero</h2>
+<section class="hero">
+  <div class="hero-photo-layer"></div>
+  <div class="wrap">
+    <div class="hero-inner">
+      <img class="hero-logo" src="images/logo.png" alt="Jacobs Barbers">
+    </div>
+  </div>
+</section>
+
+<section class="welcome-section">
+  <div class="wrap">
+    <h2 class="welcome-heading">Welcome to Jacobs Barbers</h2>
+    <p class="welcome-bio">I'm Lucyna Jacobs. I've been growing Jacobs Barbers shop in Etobicoke since 2016, one considered haircut at a time. Proportion, restraint, and attention to detail matter here, whether it's a precise classic trim or a fresh, current style. Reasonably priced, carefully performed and built entirely around you.</p>
+  </div>
+</section>
+
+<div class="drift-banner">
+  <img src="images/banner.jpeg" alt="Jacobs Barbers">
+</div>
+
+<section class="why">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Why Jacobs Barbers</span>
+      <h2 style="margin-top:16px;">What sets a visit apart.</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
+        </div>
+        <h3>Since 2016</h3>
+        <ul>
+          <li>Precision</li>
+          <li>Proportion</li>
+          <li>Attention to Detail</li>
+          <li>Discipline</li>
+        </ul>
       </div>
-      <div class="card-body">
-        <p>Same precise treatment, with a new hero photo — a straight razor and combs laid out on a towel.</p>
-        <a class="card-btn" href="v7-new-hero/">View This Version →</a>
+      <div class="why-card">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <h3>Flat Rate $45</h3>
+        <ul>
+          <li>One Chair Shop</li>
+          <li>Honesty</li>
+          <li>Fairness</li>
+        </ul>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <h3>Lucy Jacobs Every Time</h3>
+        <ul>
+          <li>Every haircut performed by the business owner</li>
+        </ul>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <h3>Consultation First</h3>
+        <ul>
+          <li>I Listen</li>
+          <li>We Discuss Possibilities</li>
+          <li>The Result Is Intentional</li>
+          <li>You'll Leave Feeling Great</li>
+        </ul>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.5 13.5 17 22l-5-3-5 3 1.5-8.5"/></svg>
+        </div>
+        <h3>Trade Certified</h3>
+        <ul>
+          <li>Trade certified through Ontario College of Trades and The Ministry of Training Colleges and Universities.</li>
+        </ul>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <h3>Book Online</h3>
+        <ul>
+          <li>Any Time</li>
+          <li>Under a Minute</li>
+        </ul>
+        <a class="why-btn" href="https://jacobsbarbers.mysalononline.com/Booking/?sid=0&guid=930aeb35-9485-4ee4-9786-aefa81fcb1c2" target="_blank" rel="noopener">Book Now</a>
       </div>
     </div>
   </div>
-</div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">What I Do</span>
+      <h2 style="margin-top:16px;">Every visit, three parts.</h2>
+    </div>
+    <div class="pillars">
+      <div class="pillar">
+        <span class="p-num">01</span>
+        <h3>Consultation</h3>
+        <p>Every visit starts with a consultation. I listen to what you wish, preferably look at your favourite haircut image. Then we talk through the possibilities together. The result is intentional, not guesswork. You'll leave feeling like yourself, only sharper.</p>
+      </div>
+      <div class="pillar">
+        <span class="p-num">02</span>
+        <h3>Cutting</h3>
+        <p>Whether it's a basic haircut or a fully individual style, I work efficiently and safely, typically within thirty minutes. I use modern tools of the highest standard, and my practice meets Canadian Hairstyling and Barbering sanitary regulations, verified through regular official inspections.</p>
+      </div>
+      <div class="pillar">
+        <span class="p-num">03</span>
+        <h3>The Shop Experience</h3>
+        <p>Clean, professional, and quietly welcoming. Relaxing music plays as you settle in, giving you a genuine chance to step away from the noise of your day. However briefly, this is a place to be looked after, not processed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Services</span>
+      <h2>What's on offer.</h2>
+      <p>All haircuts are $45 flat — no tiers, no surprises at the chair.</p>
+    </div>
+    <table class="service-table">
+      <tr>
+        <td class="s-name">Classic Cut</td>
+        <td class="s-desc">A clean, timeless cut tailored to face shape and hair type.</td>
+        <td class="s-price">$45</td>
+      </tr>
+      <tr>
+        <td class="s-name">Skin Fade</td>
+        <td class="s-desc">Precision fade blended smoothly from skin to length.</td>
+        <td class="s-price">$45</td>
+      </tr>
+      <tr>
+        <td class="s-name">Kids Cut</td>
+        <td class="s-desc">Patient, easygoing cuts for younger clients.</td>
+        <td class="s-price">$45</td>
+      </tr>
+      <tr>
+        <td class="s-name">Beard Trim &amp; Shape</td>
+        <td class="s-desc">Shaped and lined for a sharp, well-kept finish.</td>
+        <td class="s-price">TBD</td>
+      </tr>
+      <tr>
+        <td class="s-name">Cut &amp; Beard Combo</td>
+        <td class="s-desc">The full service — haircut and beard work, together.</td>
+        <td class="s-price">TBD</td>
+      </tr>
+    </table>
+    <div class="placeholder-note">Haircuts confirmed at a flat $45. Beard trim and combo pricing still marked TBD — send those over and they'll drop straight in.</div>
+  </div>
+</section>
+
+<section class="section-alt" id="gallery">
+  <div class="wrap">
+    <div class="gallery-head-row">
+      <div class="section-head">
+        <span class="eyebrow">Gallery</span>
+        <h2>A look at the work.</h2>
+        <p>A selection of recent cuts, in the shop.</p>
+      </div>
+      <div class="gallery-nav">
+        <button id="galleryPrev" aria-label="Previous photos">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button id="galleryNext" aria-label="Next photos">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="gallery-scroll">
+      <div class="gallery-track">
+      <div class="gallery-item"><img src="images/cut-1.jpeg" alt="Haircut example 1"></div>
+      <div class="gallery-item"><img src="images/cut-2.jpeg" alt="Haircut example 2"></div>
+      <div class="gallery-item"><img src="images/cut-3.jpeg" alt="Haircut example 3"></div>
+      <div class="gallery-item"><img src="images/cut-4.jpeg" alt="Haircut example 4"></div>
+      <div class="gallery-item"><img src="images/cut-5.jpeg" alt="Haircut example 5"></div>
+      <div class="gallery-item"><img src="images/cut-6.jpeg" alt="Haircut example 6"></div>
+      <div class="gallery-item"><img src="images/cut-7.jpeg" alt="Haircut example 7"></div>
+      <div class="gallery-item"><img src="images/cut-8.jpeg" alt="Haircut example 8"></div>
+      <div class="gallery-item"><img src="images/cut-9.jpeg" alt="Haircut example 9"></div>
+      <div class="gallery-item"><img src="images/cut-10.jpeg" alt="Haircut example 10"></div>
+      <div class="gallery-item"><img src="images/cut-12.jpeg" alt="Haircut example 12"></div>
+      <div class="gallery-item"><img src="images/cut-13.jpeg" alt="Haircut example 13"></div>
+      <div class="gallery-item"><img src="images/cut-14.jpeg" alt="Haircut example 14"></div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap about-grid">
+    <div class="about-photo">
+      <img src="images/about-lucyna.jpeg" alt="Lucyna Jacobs, owner of Jacobs Barbers">
+    </div>
+    <div class="about-copy">
+      <span class="eyebrow">About</span>
+      <h2 style="margin:16px 0 26px; font-size:clamp(2.1rem,3.6vw,2.8rem);">About Lucyna.</h2>
+      <p>I started cutting hair at five years old — much to the amusement and occasional alarm of my family. Dolls came first, then increasingly brave relatives and friends who, somehow, kept coming back. Years later, that early instinct became a formal trade: I trained and certified through the Ontario College of Trades and the Ministry of Training, Colleges and Universities.</p>
+      <p>My path also runs through architecture and interior design, and I bring that same sensibility to the stylist chair — an eye for proportion, detail, and how a space or a person might feel. I've learned that my clients are not just looking for a good haircut, they're looking for thirty honest, unhurried minutes in a demanding week.</p>
+      <a class="why-btn" href="https://jacobsbarbers.mysalononline.com/Booking/?sid=0&guid=930aeb35-9485-4ee4-9786-aefa81fcb1c2" target="_blank" rel="noopener">Click here to book your appointment</a>
+    </div>
+  </div>
+</section>
+
+<section class="section-alt" id="visit">
+  <div class="wrap visit-grid">
+    <div>
+      <span class="eyebrow">Find The Shop</span>
+      <h2 style="margin:16px 0 34px; font-size:clamp(2.1rem,3.6vw,2.8rem);">North Queen Street</h2>
+
+      <div class="visit-block">
+        <span class="eyebrow">Address</span>
+        <div class="value">170 North Queen Street, Studio 7<br>Etobicoke, ON M9C 1B1</div>
+        <div class="note">Inside JC Salons — four units west of Dollarama, near Sherway Gardens.</div>
+      </div>
+      <div class="visit-block">
+        <span class="eyebrow">Phone</span>
+        <div class="value"><a href="tel:6476883094">647 688 3094</a></div>
+      </div>
+
+      <span class="eyebrow">Hours</span>
+      <table class="hours-table">
+        <tr><td>Monday</td><td>Closed</td></tr>
+        <tr><td>Tuesday</td><td>10:00a &ndash; 6:00p</td></tr>
+        <tr><td>Wednesday</td><td>10:00a &ndash; 6:00p</td></tr>
+        <tr><td>Thursday</td><td>11:30a &ndash; 5:00p</td></tr>
+        <tr><td>Friday</td><td>10:00a &ndash; 6:00p</td></tr>
+        <tr><td>Saturday</td><td>10:00a &ndash; 3:00p</td></tr>
+        <tr><td>Sunday</td><td>Closed</td></tr>
+      </table>
+    </div>
+    <div class="map-frame">
+      <iframe
+        src="https://www.google.com/maps?q=170+North+Queen+Street,+Etobicoke,+ON+M9C+1B1&output=embed"
+        title="Map to Jacobs Barbers, 170 North Queen Street, Etobicoke">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band" id="contact">
+  <div class="wrap">
+    <span class="eyebrow">Get In Touch</span>
+    <h2>Let's get you in the chair.</h2>
+    <p>Book online in under a minute, or call the shop directly.</p>
+    <div class="contact-links">
+      <a href="tel:6476883094">647 688 3094</a>
+      <span style="color:var(--line);">·</span>
+      <a href="mailto:info@jacobsbarbers.ca">info@jacobsbarbers.ca</a>
+    </div>
+  </div>
+</section>
 
 <footer>
   <div class="wrap">
-    <p>Built for Jacobs Barbers, 170 North Queen Street, Etobicoke.</p>
+    <div class="footer-grid">
+      <div class="brand"><img src="images/logo.png" alt="Jacobs Barbers"></div>
+      <div class="footer-links">
+        <a href="tel:6476883094">647 688 3094</a>
+        <a href="https://jacobsbarbers.mysalononline.com/Booking/?sid=0&guid=930aeb35-9485-4ee4-9786-aefa81fcb1c2" target="_blank" rel="noopener">Book Online</a>
+      </div>
+    </div>
+    <div class="footer-note">170 North Queen Street, Studio 7, Etobicoke, ON M9C 1B1</div>
   </div>
 </footer>
+
+<div class="preview-badge">Structure Preview — Placeholder Content</div>
+
+<script>
+  const galleryScroll = document.querySelector('.gallery-scroll');
+  const galleryPrev = document.getElementById('galleryPrev');
+  const galleryNext = document.getElementById('galleryNext');
+  if (galleryScroll && galleryPrev && galleryNext) {
+    const scrollByCard = () => {
+      const card = galleryScroll.querySelector('.gallery-item');
+      const gap = 14;
+      return card ? card.getBoundingClientRect().width + gap : 280;
+    };
+    const maxScroll = () => galleryScroll.scrollWidth - galleryScroll.clientWidth - 2;
+    galleryPrev.addEventListener('click', () => {
+      if (galleryScroll.scrollLeft <= 4) {
+        galleryScroll.scrollTo({ left: maxScroll(), behavior: 'smooth' });
+      } else {
+        galleryScroll.scrollBy({ left: -scrollByCard() * 2, behavior: 'smooth' });
+      }
+    });
+    galleryNext.addEventListener('click', () => {
+      if (galleryScroll.scrollLeft >= maxScroll() - 4) {
+        galleryScroll.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        galleryScroll.scrollBy({ left: scrollByCard() * 2, behavior: 'smooth' });
+      }
+    });
+  }
+
+  const header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 40) header.classList.add('scrolled');
+    else header.classList.remove('scrolled');
+  });
+
+  const menuBtn = document.getElementById('menuBtn');
+  const menuOverlay = document.getElementById('menuOverlay');
+  menuBtn.addEventListener('click', () => {
+    const isOpen = menuOverlay.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', isOpen);
+  });
+  menuOverlay.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      menuOverlay.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>
 
 </body>
 </html>

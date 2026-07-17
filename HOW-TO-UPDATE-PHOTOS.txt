@@ -1,0 +1,59 @@
+HOW TO UPDATE PHOTOS ON YOUR WEBSITE
+=====================================
+
+Your website has one folder called "images" that holds every photo
+on the site. To change a photo, you replace the file — you never
+need to open or edit any code.
+
+WHERE THE PHOTOS LIVE
+----------------------
+Inside your website folder, open: images
+
+You'll see files named:
+  hero.jpeg           -> the big photo at the top of the homepage
+  banner.jpeg         -> the wide drifting banner between the hero and services
+  about-lucyna.jpeg    -> your photo in the About section
+  cut-1.jpeg           -> first photo in the gallery grid
+  cut-2.jpeg           -> second photo in the gallery grid
+  cut-3.jpeg           -> third photo in the gallery grid
+  ...through cut-8.jpeg
+
+TO REPLACE A PHOTO
+--------------------
+1. Pick the new photo you want to use.
+2. Rename it to match EXACTLY the file it's replacing.
+   For example, if you're swapping the 3rd gallery photo,
+   rename your new photo to:  cut-3.jpeg
+3. Drag that renamed file into the "images" folder, and
+   choose "Replace" when it asks if you want to overwrite
+   the existing file.
+4. That's it — the website updates automatically. No code,
+   no developer needed.
+
+A FEW TIPS
+------------
+- Keep the file extension the same (.jpeg stays .jpeg). If your
+  new photo is a .png or .heic, either save/export it as a .jpeg
+  first, or ask your developer to update one line of code to
+  match — either works.
+- Photos that are roughly upright/portrait shaped (taller than
+  wide) will look best in the gallery grid and About photo.
+  The hero photo at the top works best as a wide, landscape shot.
+- Large photos straight from a phone are fine — the website
+  automatically resizes them to fit. If a page ever feels slow
+  to load, that usually just means the photo file is very large
+  (10+ MB) and could be compressed first.
+
+WANT TO ADD MORE THAN 8 GALLERY PHOTOS, OR REORGANIZE THEM?
+--------------------------------------------------------------
+Swapping existing files is fully self-serve. Adding new photo
+slots or rearranging the layout involves a small code change —
+just message your developer (Brian) for that part.
+
+ADDING SERVICES, PRICES, AND HOURS
+------------------------------------
+The Services list and the weekly Hours table are currently
+placeholders. Send the final wording, pricing, and hours to
+Brian and he'll drop them into the page for you — this part
+isn't a simple file swap like the photos, since it's text
+inside the page layout itself.
