@@ -251,6 +251,22 @@
   .section-head h2{font-size:clamp(2.2rem, 4.4vw, 3.2rem); margin-top:16px;}
   .section-head p{color:var(--grey); font-size:1.18rem; line-height:1.65; margin-top:18px;}
 
+  .gallery-head-row{ display:flex; justify-content:space-between; align-items:flex-end; gap:30px; margin-bottom:60px; flex-wrap:wrap; }
+  .gallery-head-row .section-head{ margin-bottom:0; }
+  .gallery-nav{ display:flex; gap:10px; }
+  .gallery-nav button{
+    width:46px; height:46px; border-radius:50%; border:1px solid var(--charcoal);
+    background:transparent; color:var(--charcoal); cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:background 0.25s ease, color 0.25s ease, transform 0.2s ease;
+  }
+  .gallery-nav button svg{ width:16px; height:16px; }
+  .gallery-nav button:hover{ background:var(--charcoal); color:var(--white); transform:translateY(-2px); }
+  .gallery-nav button:active{ transform:translateY(0); }
+  .gallery-nav button:disabled{ opacity:0.3; cursor:default; }
+  .gallery-nav button:disabled:hover{ background:transparent; color:var(--charcoal); transform:none; }
+  @media (max-width:600px){ .gallery-nav{display:none;} }
+
   /* ---------- SERVICES ---------- */
   .service-table{width:100%; border-collapse:collapse;}
   .service-table tr{border-bottom:1px solid var(--line);}
@@ -518,10 +534,20 @@
 
 <section class="section-alt" id="gallery">
   <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow">Gallery</span>
-      <h2>A look at the work.</h2>
-      <p>Every image below is a placeholder file inside the <code>images</code> folder — see the note at the end of this page for exactly how to swap them.</p>
+    <div class="gallery-head-row">
+      <div class="section-head">
+        <span class="eyebrow">Gallery</span>
+        <h2>A look at the work.</h2>
+        <p>A selection of recent cuts, in the shop.</p>
+      </div>
+      <div class="gallery-nav">
+        <button id="galleryPrev" aria-label="Previous photos">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button id="galleryNext" aria-label="Next photos">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
     </div>
     <div class="gallery-scroll">
       <div class="gallery-track">
@@ -624,6 +650,31 @@
 <div class="preview-badge">Structure Preview — Placeholder Content</div>
 
 <script>
+  const galleryScroll = document.querySelector('.gallery-scroll');
+  const galleryPrev = document.getElementById('galleryPrev');
+  const galleryNext = document.getElementById('galleryNext');
+  if (galleryScroll && galleryPrev && galleryNext) {
+    const scrollByCard = () => {
+      const card = galleryScroll.querySelector('.gallery-item');
+      const gap = 14;
+      return card ? card.getBoundingClientRect().width + gap : 280;
+    };
+    const updateGalleryNavState = () => {
+      const maxScroll = galleryScroll.scrollWidth - galleryScroll.clientWidth - 2;
+      galleryPrev.disabled = galleryScroll.scrollLeft <= 0;
+      galleryNext.disabled = galleryScroll.scrollLeft >= maxScroll;
+    };
+    galleryPrev.addEventListener('click', () => {
+      galleryScroll.scrollBy({ left: -scrollByCard() * 2, behavior: 'smooth' });
+    });
+    galleryNext.addEventListener('click', () => {
+      galleryScroll.scrollBy({ left: scrollByCard() * 2, behavior: 'smooth' });
+    });
+    galleryScroll.addEventListener('scroll', updateGalleryNavState);
+    window.addEventListener('resize', updateGalleryNavState);
+    updateGalleryNavState();
+  }
+
   const header = document.getElementById('siteHeader');
   window.addEventListener('scroll', () => {
     if (window.scrollY > 40) header.classList.add('scrolled');
