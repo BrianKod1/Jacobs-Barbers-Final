@@ -141,11 +141,12 @@
   .hero-logo{
     width:100%; max-width:300px; height:auto; margin-bottom:28px; display:block;
   }
-  .hero-welcome{
-    font-size:clamp(1.6rem, 3vw, 2.3rem); margin-bottom:18px; color:var(--charcoal);
+  .welcome-section{ padding:70px 0 30px; text-align:center; }
+  .welcome-heading{
+    font-size:clamp(1.9rem, 3.6vw, 2.7rem); margin-bottom:22px; color:var(--charcoal);
   }
-  .hero-bio{
-    font-size:1.15rem; line-height:1.75; color:var(--grey); max-width:480px;
+  .welcome-bio{
+    font-size:1.22rem; line-height:1.8; color:var(--grey); max-width:640px; margin:0 auto;
   }
   .hero p.lede{
     font-size:1.22rem; line-height:1.7; color:var(--grey);
@@ -194,7 +195,7 @@
     .hero h1{ font-size:clamp(2.4rem, 9vw, 3.6rem); }
     .hero .eyebrow{ font-size:0.65rem; }
     .hero p.lede{ font-size:1.1rem; }
-    .hero-bio{ font-size:1.02rem; }
+    .welcome-bio{ font-size:1.05rem; }
     .hero-actions{ flex-direction:column; align-items:flex-start; gap:14px; }
     .hero-actions .btn-primary{ width:100%; text-align:center; }
   }
@@ -383,9 +384,14 @@
   <div class="wrap">
     <div class="hero-inner">
       <img class="hero-logo" src="images/logo.png" alt="Jacobs Barbers">
-      <h2 class="hero-welcome">Welcome to Jacobs Barbers</h2>
-      <p class="hero-bio">I'm Lucyna Jacobs. I've been growing Jacobs Barbers shop in Etobicoke since 2016, one considered haircut at a time. Proportion, restraint, and attention to detail matter here, whether it's a precise classic trim or a fresh, current style. Reasonably priced, carefully performed and built entirely around you.</p>
     </div>
+  </div>
+</section>
+
+<section class="welcome-section">
+  <div class="wrap">
+    <h2 class="welcome-heading">Welcome to Jacobs Barbers</h2>
+    <p class="welcome-bio">I'm Lucyna Jacobs. I've been growing Jacobs Barbers shop in Etobicoke since 2016, one considered haircut at a time. Proportion, restraint, and attention to detail matter here, whether it's a precise classic trim or a fresh, current style. Reasonably priced, carefully performed and built entirely around you.</p>
   </div>
 </section>
 
@@ -561,7 +567,6 @@
       <div class="gallery-item"><img src="images/cut-8.jpeg" alt="Haircut example 8"></div>
       <div class="gallery-item"><img src="images/cut-9.jpeg" alt="Haircut example 9"></div>
       <div class="gallery-item"><img src="images/cut-10.jpeg" alt="Haircut example 10"></div>
-      <div class="gallery-item"><img src="images/cut-11.jpeg" alt="Haircut example 11"></div>
       <div class="gallery-item"><img src="images/cut-12.jpeg" alt="Haircut example 12"></div>
       <div class="gallery-item"><img src="images/cut-13.jpeg" alt="Haircut example 13"></div>
       <div class="gallery-item"><img src="images/cut-14.jpeg" alt="Haircut example 14"></div>
@@ -659,20 +664,21 @@
       const gap = 14;
       return card ? card.getBoundingClientRect().width + gap : 280;
     };
-    const updateGalleryNavState = () => {
-      const maxScroll = galleryScroll.scrollWidth - galleryScroll.clientWidth - 2;
-      galleryPrev.disabled = galleryScroll.scrollLeft <= 0;
-      galleryNext.disabled = galleryScroll.scrollLeft >= maxScroll;
-    };
+    const maxScroll = () => galleryScroll.scrollWidth - galleryScroll.clientWidth - 2;
     galleryPrev.addEventListener('click', () => {
-      galleryScroll.scrollBy({ left: -scrollByCard() * 2, behavior: 'smooth' });
+      if (galleryScroll.scrollLeft <= 4) {
+        galleryScroll.scrollTo({ left: maxScroll(), behavior: 'smooth' });
+      } else {
+        galleryScroll.scrollBy({ left: -scrollByCard() * 2, behavior: 'smooth' });
+      }
     });
     galleryNext.addEventListener('click', () => {
-      galleryScroll.scrollBy({ left: scrollByCard() * 2, behavior: 'smooth' });
+      if (galleryScroll.scrollLeft >= maxScroll() - 4) {
+        galleryScroll.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        galleryScroll.scrollBy({ left: scrollByCard() * 2, behavior: 'smooth' });
+      }
     });
-    galleryScroll.addEventListener('scroll', updateGalleryNavState);
-    window.addEventListener('resize', updateGalleryNavState);
-    updateGalleryNavState();
   }
 
   const header = document.getElementById('siteHeader');
