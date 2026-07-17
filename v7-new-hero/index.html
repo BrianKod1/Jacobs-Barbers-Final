@@ -141,6 +141,12 @@
   .hero-logo{
     width:100%; max-width:300px; height:auto; margin-bottom:28px; display:block;
   }
+  .hero-welcome{
+    font-size:clamp(1.6rem, 3vw, 2.3rem); margin-bottom:18px; color:var(--charcoal);
+  }
+  .hero-bio{
+    font-size:1.15rem; line-height:1.75; color:var(--grey); max-width:480px;
+  }
   .hero p.lede{
     font-size:1.22rem; line-height:1.7; color:var(--grey);
     max-width:480px; margin-bottom:44px;
@@ -188,6 +194,7 @@
     .hero h1{ font-size:clamp(2.4rem, 9vw, 3.6rem); }
     .hero .eyebrow{ font-size:0.65rem; }
     .hero p.lede{ font-size:1.1rem; }
+    .hero-bio{ font-size:1.02rem; }
     .hero-actions{ flex-direction:column; align-items:flex-start; gap:14px; }
     .hero-actions .btn-primary{ width:100%; text-align:center; }
   }
@@ -212,6 +219,19 @@
   .why-icon svg{ width:24px; height:24px; stroke:var(--charcoal); }
   .why-card h3{ font-size:1.3rem; margin-bottom:12px; font-weight:400;}
   .why-card p{ color:var(--grey); font-size:1.08rem; line-height:1.7; }
+  .why-card ul{ list-style:none; text-align:left; }
+  .why-card ul li{
+    color:var(--grey); font-size:1.05rem; line-height:1.6; padding:6px 0 6px 20px; position:relative;
+  }
+  .why-card ul li::before{
+    content:"—"; position:absolute; left:0; color:var(--charcoal);
+  }
+  .why-card .why-btn{
+    display:inline-block; margin-top:16px; background:var(--charcoal); color:var(--white);
+    padding:12px 26px; border-radius:30px; font-family:'EB Garamond', serif; font-size:0.95rem;
+    transition:background 0.2s ease;
+  }
+  .why-card .why-btn:hover{ background:#3a3327; }
   @media (max-width:860px){ .why-grid{grid-template-columns:repeat(2, 1fr);} }
   @media (max-width:600px){ .why-grid{grid-template-columns:1fr;} }
 
@@ -347,6 +367,8 @@
   <div class="wrap">
     <div class="hero-inner">
       <img class="hero-logo" src="images/logo.png" alt="Jacobs Barbers">
+      <h2 class="hero-welcome">Welcome to Jacobs Barbers</h2>
+      <p class="hero-bio">I'm Lucyna Jacobs. I've been growing Jacobs Barbers shop in Etobicoke since 2016, one considered haircut at a time. Proportion, restraint, and attention to detail matter here, whether it's a precise classic trim or a fresh, current style. Reasonably priced, carefully performed and built entirely around you.</p>
     </div>
   </div>
 </section>
@@ -366,43 +388,65 @@
         <div class="why-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
         </div>
-        <h3>Precise, Unhurried Cuts</h3>
-        <p>Every appointment is built around getting the style right — never rushed through.</p>
+        <h3>Since 2016</h3>
+        <ul>
+          <li>Precision</li>
+          <li>Proportion</li>
+          <li>Attention to Detail</li>
+          <li>Discipline</li>
+        </ul>
       </div>
       <div class="why-card">
         <div class="why-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
         </div>
-        <h3>$45 Flat Rate</h3>
-        <p>One straightforward price for every haircut — no tiers, no surprises at the chair.</p>
+        <h3>Flat Rate $45</h3>
+        <ul>
+          <li>One Chair Shop</li>
+          <li>Honesty</li>
+          <li>Fairness</li>
+        </ul>
       </div>
       <div class="why-card">
         <div class="why-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
         </div>
-        <h3>One Barber, Every Time</h3>
-        <p>Every cut is done personally by Lucyna — the same steady hands, visit after visit.</p>
+        <h3>Lucy Jacobs Every Time</h3>
+        <ul>
+          <li>Every haircut performed by the business owner</li>
+        </ul>
       </div>
       <div class="why-card">
         <div class="why-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
         </div>
         <h3>Consultation First</h3>
-        <p>A real conversation before a single cut is made — listened to, not assumed.</p>
+        <ul>
+          <li>I Listen</li>
+          <li>We Discuss Possibilities</li>
+          <li>The Result Is Intentional</li>
+          <li>You'll Leave Feeling Great</li>
+        </ul>
       </div>
       <div class="why-card">
         <div class="why-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.5 13.5 17 22l-5-3-5 3 1.5-8.5"/></svg>
         </div>
-        <h3>Trade-Certified</h3>
-        <p>Trained and certified through the Ontario College of Trades — the real thing, done right.</p>
+        <h3>Trade Certified</h3>
+        <ul>
+          <li>Trade certified through Ontario College of Trades and The Ministry of Training Colleges and Universities.</li>
+        </ul>
       </div>
       <div class="why-card">
         <div class="why-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         </div>
-        <h3>Book Online, Anytime</h3>
-        <p>A real online booking system — pick a time that works, in under a minute.</p>
+        <h3>Book Online</h3>
+        <ul>
+          <li>Any Time</li>
+          <li>Under a Minute</li>
+        </ul>
+        <a class="why-btn" href="https://jacobsbarbers.mysalononline.com/Booking/?sid=0&guid=930aeb35-9485-4ee4-9786-aefa81fcb1c2" target="_blank" rel="noopener">Book Now</a>
       </div>
     </div>
   </div>
@@ -411,24 +455,24 @@
 <section>
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">What We Do</span>
+      <span class="eyebrow">What I Do</span>
       <h2 style="margin-top:16px;">Every visit, three parts.</h2>
     </div>
     <div class="pillars">
       <div class="pillar">
         <span class="p-num">01</span>
         <h3>Consultation</h3>
-        <p>We listen first — understanding your style preferences and how your hair naturally falls before a single cut is made, so you leave feeling genuinely great about the result.</p>
+        <p>Every visit starts with a consultation. I listen to what you wish, preferably look at your favourite haircut image. Then we talk through the possibilities together. The result is intentional, not guesswork. You'll leave feeling like yourself, only sharper.</p>
       </div>
       <div class="pillar">
         <span class="p-num">02</span>
         <h3>Cutting</h3>
-        <p>A haircut or a full style change, delivered efficiently and safely in under 20 minutes, using modern tools kept current with Canadian hairstyling and barbering sanitary standards.</p>
+        <p>Whether it's a basic haircut or a fully individual style, I work efficiently and safely, typically within thirty minutes. I use modern tools of the highest standard, and my practice meets Canadian Hairstyling and Barbering sanitary regulations, verified through regular official inspections.</p>
       </div>
       <div class="pillar">
         <span class="p-num">03</span>
-        <h3>Shop Experience</h3>
-        <p>Friendly, professional, and clean — settle in, listen to the music, and let the rest of your day wait outside for twenty minutes.</p>
+        <h3>The Shop Experience</h3>
+        <p>Clean, professional, and quietly welcoming. Relaxing music plays as you settle in, giving you a genuine chance to step away from the noise of your day. However briefly, this is a place to be looked after, not processed.</p>
       </div>
     </div>
   </div>
