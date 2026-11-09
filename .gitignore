@@ -1,3 +1,10 @@
 .DS_Store
 Thumbs.db
 *.log
+
+# Local credentials, serverless and build outputs
+.env
+.env.*
+!.env.example
+node_modules/
+.vercel/
