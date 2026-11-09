@@ -125,6 +125,7 @@ try{
  const detail=document.createElement('p');detail.textContent=data.service+' · '+data.date+' at '+data.time+' (Toronto time). Save your reference. Confirmation email is not yet enabled.';
  result.append(strong,detail);
  form.querySelectorAll('input,textarea,select,button').forEach(el=>{el.disabled=true});
+ btn.textContent='Appointment booked';
 }catch(e){result.textContent=e.message||'Booking unavailable; please call the shop.';await load()}
 finally{if(!btn.disabled||!result.querySelector('strong')){btn.disabled=false;btn.textContent='Confirm appointment'}}
 });
