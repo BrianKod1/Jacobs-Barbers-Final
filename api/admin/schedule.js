@@ -20,8 +20,11 @@ export default async function handler(req,res){
   }
   const id=clean(req.body?.id,36),action=req.body?.action;
   if(!/^[a-f0-9-]{36}$/i.test(id)||!['cancel','unblock'].includes(action))return send(res,400,{error:'Invalid change'});
-  const status=action==='unblock'?'blocked':'confirmed';
-  const rows=await db.query("UPDATE appointments SET status='cancelled' WHERE id=$1::uuid AND status=$2 RETURNING id",[id,status]);
+  // Blocked slots have no customer fields; deleting them is the safe inverse of blocking.
+  // Customer cancellations retain their record for the owner dashboard.
+  const rows=action==='unblock'
+   ? await db.query("DELETE FROM appointments WHERE id=$1::uuid AND status='blocked' RETURNING id",[id])
+   : await db.query("UPDATE appointments SET status='cancelled' WHERE id=$1::uuid AND status='confirmed' RETURNING id",[id]);
   send(res,rows.length?200:404,rows.length?{ok:true}:{error:'Entry not found'});
  }catch(e){fail(res,e)}
 }
