@@ -1,3 +1,4 @@
+import {notifyBooking} from './_email.js';
 import {sql,send,allow,sameOrigin,services,slots,clean,ref,fail} from './_core.js';
 export default async function handler(req,res){
  if(!allow(req,res,['POST']))return;
@@ -12,6 +13,7 @@ export default async function handler(req,res){
   const reference=ref();
   const rows=await db.query("INSERT INTO appointments (reference,booking_date,booking_time,service,customer_name,customer_email,customer_phone,notes,status) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'confirmed') ON CONFLICT DO NOTHING RETURNING reference",[reference,date,time,service.name,name,email,phone,notes]);
   if(!rows.length)return send(res,409,{error:'That time has just been booked. Choose another slot.'});
-  send(res,201,{status:'confirmed',reference,date,time,service:service.name,price:service.price,message:'Your appointment is recorded. Save this reference and call the shop if you need a change.',emailSent:false});
+  const delivery=await notifyBooking({reference,date,time,service:service.name,name,email,phone,notes});
+  send(res,201,{status:'confirmed',reference,date,time,service:service.name,price:service.price,message:'Your appointment is recorded. Save this reference and call the shop if you need a change.',emailSent:delivery.customer});
  }catch(e){fail(res,e)}
 }
