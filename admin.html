@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>Jacobs Barbers | Appointment Manager</title>
+<style>
+:root{font-family:system-ui,sans-serif;color:#211d18;background:#fbf3e3}*{box-sizing:border-box}body{margin:0;padding:24px}main{max-width:1040px;margin:auto}h1{font:normal 42px Georgia,serif}h2{font:normal 26px Georgia,serif}section{border:1px solid #d7cbb6;border-radius:10px;background:white;padding:24px;margin-bottom:22px}input,button,select{font:inherit;padding:11px;margin:5px 3px 5px 0;max-width:100%;border-radius:5px;border:1px solid #9d9486}button{background:#211d18;color:white;cursor:pointer}button:hover{background:#534b40}button:disabled{opacity:.5}label{display:inline-block;margin:5px 12px 5px 0}table{border-collapse:collapse;width:100%}th,td{padding:11px;text-align:left;border-bottom:1px solid #e4ddd0;vertical-align:top}td button{font-size:13px}#list{overflow-x:auto}.muted{color:#615a50}.notice{background:#f8e8d0;padding:12px 18px;border-radius:7px}a{color:inherit}@media(max-width:600px){body{padding:12px}section{padding:15px}h1{font-size:32px}}
+</style></head><body><main>
+<p><a href="index.html">← Jacobs Barbers website</a></p><h1>Appointments</h1>
+<p class="muted">Private appointment manager · Toronto local time</p>
+<section id="signIn"><h2>Owner sign in</h2><form id="loginForm">
+<label for="password">Password</label><input type="password" id="password" autocomplete="current-password" required>
+<button type="submit">Sign in</button></form><p id="loginMessage" role="status"></p></section>
+<div id="dashboard" hidden>
+<section><button id="logout" type="button" style="float:right">Sign out</button><h2>Schedule</h2>
+<form id="rangeForm"><label>From <input id="from" type="date" required></label>
+<label>To <input id="to" type="date" required></label><button type="submit">Load schedule</button></form>
+<div id="list"><p class="muted">Select a date range to see appointments.</p></div></section>
+<section><h2>Block an unavailable time</h2><p class="muted">Block a 30-minute time slot to prevent customers from booking it.</p>
+<form id="blockForm"><label>Date <input id="blockDate" type="date" required></label>
+<label>Time <select id="blockTime" required disabled><option value="">Choose a date</option></select></label>
+<button type="submit">Block slot</button></form><p id="blockMessage" role="status"></p></section>
+<section class="notice"><strong>Important:</strong> Cancellation removes a booking from the live calendar. Contact customers directly when cancelling; automatic cancellation emails have not been set up.</section>
+</div></main>
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const iso=offset=>{const d=new Date(Date.now()+offset*86400000);const x=Object.fromEntries(new Intl.DateTimeFormat('en-US',{timeZone:'America/Toronto',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(d).map(p=>[p.type,p.value]));return x.year+'-'+x.month+'-'+x.day};
+$('from').value=iso(0);$('to').value=iso(14);$('blockDate').min=iso(0);
+async function api(url,opts){const r=await fetch(url,{credentials:'same-origin',cache:'no-store',...opts});const d=await r.json();if(!r.ok)throw new Error(d.error||'Request failed');return d}
+function loggedIn(){ $('signIn').hidden=true;$('dashboard').hidden=false;load()}
+$('loginForm').addEventListener('submit',async e=>{e.preventDefault();$('loginMessage').textContent='Signing in...';try{await api('/api/admin/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:$('password').value})});$('password').value='';$('loginMessage').textContent='';loggedIn()}catch(err){$('loginMessage').textContent=err.message}});
+$('logout').addEventListener('click',async()=>{await api('/api/admin/logout',{method:'POST'});$('signIn').hidden=false;$('dashboard').hidden=true});
+$('rangeForm').addEventListener('submit',e=>{e.preventDefault();load()});
+async function load(){
+ $('list').textContent='Loading...';
+ try{
+ const data=await api('/api/admin/schedule?from='+encodeURIComponent($('from').value)+'&to='+encodeURIComponent($('to').value));
+ const table=document.createElement('table'),head=document.createElement('thead'),headrow=document.createElement('tr');
+ ['Date','Time','Service / status','Customer','Contact','Action'].forEach(t=>{const h=document.createElement('th');h.textContent=t;headrow.append(h)});head.append(headrow);table.append(head);
+ const body=document.createElement('tbody');
+ data.entries.forEach(item=>{
+ const row=document.createElement('tr');
+ const values=[item.date,item.time,(item.service||'Blocked')+' · '+item.status,item.customer_name||'—',[item.customer_email,item.customer_phone].filter(Boolean).join(' / ')||'—'];
+ values.forEach(v=>{const td=document.createElement('td');td.textContent=v;row.append(td)});
+ const td=document.createElement('td');
+ if(item.status!=='cancelled'){const btn=document.createElement('button');btn.textContent=item.status==='blocked'?'Unblock':'Cancel';btn.onclick=async()=>{if(!confirm('Remove this reservation/blocked time?'))return;btn.disabled=true;try{await api('/api/admin/schedule',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:item.id,action:item.status==='blocked'?'unblock':'cancel'})});await load()}catch(err){alert(err.message);btn.disabled=false}};td.append(btn)}
+ row.append(td);body.append(row)
+ });table.append(body);$('list').replaceChildren(table);
+ if(!data.entries.length)$('list').textContent='No appointments in this range.';
+ }catch(err){$('list').textContent=err.message}
+}
+$('blockDate').addEventListener('change',async()=>{
+ const select=$('blockTime');select.disabled=true;select.replaceChildren(new Option('Loading...',''));
+ try{const data=await api('/api/availability?date='+encodeURIComponent($('blockDate').value));select.replaceChildren(new Option('Choose a time',''));data.slots.forEach(t=>select.add(new Option(t,t)));select.disabled=!data.slots.length}
+ catch(err){select.replaceChildren(new Option('Unavailable',''));$('blockMessage').textContent=err.message}
+});
+$('blockForm').addEventListener('submit',async e=>{e.preventDefault();try{await api('/api/admin/schedule',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({date:$('blockDate').value,time:$('blockTime').value})});$('blockMessage').textContent='Slot blocked.';$('blockDate').dispatchEvent(new Event('change'));await load()}catch(err){$('blockMessage').textContent=err.message}});
+})();
+</script></body></html>
